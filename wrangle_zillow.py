@@ -62,3 +62,28 @@ def missing_cols(df):
     missing_cols_df = pd.DataFrame({'num_cols_missing': num_cols_missing, 'pct_cols_missing': pct_cols_missing})
     # returning DF
     return missing_cols_df
+
+def get_single_units(df):
+    """
+    Function accepts a DF and returns it with only single unit property rows via filtering by property land use type id
+    """
+    # using | (or) to filter properties based on land use type id
+    # filtering in any properties that have a single unit land type code
+    singles = df[(df.propertylandusetypeid == 261) | (df.propertylandusetypeid == 263) | (df.propertylandusetypeid == 264) \
+                 | (df.propertylandusetypeid == 266) | (df.propertylandusetypeid == 273) | (df.propertylandusetypeid == 275) \
+                 | (df.propertylandusetypeid == 276) | (df.propertylandusetypeid == 279)]
+    return singles
+
+# creating function that takes 3 arguments: 
+# dataframe, % of a column that must be non-null for it be accepted, % of each row that must be non-null for it to be accepted
+def handle_missing_values(df, prop_column, prop_row):
+    """
+    Function that takes 3 arguments: 
+    dataframe, % of a column that must be non-null for it be accepted, % of each row that must be non-null for it to be accepted.
+    Returns data frame with only rows and columns that meet specifications.
+    """
+    threshold = int(round(prop_column*len(df.index),0))
+    df.dropna(axis=1, thresh = threshold, inplace=True)
+    threshold = int(round(prop_row*len(df.columns),0))
+    df.dropna(axis=0, thresh=threshold, inplace=True)
+    return df
