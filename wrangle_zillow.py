@@ -87,3 +87,11 @@ def handle_missing_values(df, prop_column, prop_row):
     threshold = int(round(prop_row*len(df.columns),0))
     df.dropna(axis=0, thresh=threshold, inplace=True)
     return df
+
+# function to acquire mall data
+    def new_mall_data():
+    '''This function reads the mall customer data from the Codeup db into a df, writes it to a csv file and returns the df'''
+    sql_query = 'SELECT * FROM customers'
+    df = pd.read_sql(sql_query, get_connection('mall_customers'))
+    df.to_csv('mall_customers_df.csv')
+    return df
