@@ -74,8 +74,6 @@ def get_single_units(df):
                  | (df.propertylandusetypeid == 276) | (df.propertylandusetypeid == 279)]
     return singles
 
-# creating function that takes 3 arguments: 
-# dataframe, % of a column that must be non-null for it be accepted, % of each row that must be non-null for it to be accepted
 def handle_missing_values(df, prop_column, prop_row):
     """
     Function that takes 3 arguments: 
@@ -88,9 +86,10 @@ def handle_missing_values(df, prop_column, prop_row):
     df.dropna(axis=0, thresh=threshold, inplace=True)
     return df
 
-# function to acquire mall data
-    def new_mall_data():
-    '''This function reads the mall customer data from the Codeup db into a df, writes it to a csv file and returns the df'''
+def new_mall_data():
+    '''
+    This function reads the mall customer data from the Codeup db into a df, writes it to a csv file and returns the df
+    '''
     sql_query = 'SELECT * FROM customers'
     df = pd.read_sql(sql_query, get_connection('mall_customers'))
     df.to_csv('mall_customers_df.csv')
